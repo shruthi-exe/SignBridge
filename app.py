@@ -1,4 +1,4 @@
-```python
+
 import streamlit as st
 import cv2
 import mediapipe as mp
@@ -1373,4 +1373,3 @@ Turning gestures into understanding 🖐️
 
 </div>
 """, unsafe_allow_html=True)
-```
