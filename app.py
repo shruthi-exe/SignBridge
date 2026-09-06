@@ -1,4 +1,4 @@
-
+```python
 import streamlit as st
 import cv2
 import mediapipe as mp
@@ -87,30 +87,34 @@ st.markdown("""
 
 .block-container {
     max-width: 1250px;
-    padding-top: 35px;
-    padding-bottom: 60px;
+    padding-top: 28px;
+    padding-bottom: 50px;
 }
 
+/* ---------------------------------------------------------
+   HERO / BANNER
+--------------------------------------------------------- */
+
 .hero {
-    padding: 40px;
-    border-radius: 30px;
+    padding: 32px;
+    border-radius: 28px;
     background: linear-gradient(
         135deg,
         rgba(139,92,246,0.20),
         rgba(6,182,212,0.07)
     );
     border: 1px solid rgba(255,255,255,0.12);
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 .logo {
-    font-size: 55px;
+    font-size: 46px;
     font-weight: 900;
-    letter-spacing: -3px;
+    letter-spacing: -2px;
 }
 
 .tagline {
-    font-size: 20px;
+    font-size: 18px;
     opacity: 0.65;
 }
 
@@ -131,7 +135,7 @@ st.markdown("""
 }
 
 .card {
-    padding: 28px;
+    padding: 25px;
     border-radius: 24px;
     min-height: 190px;
 }
@@ -199,6 +203,104 @@ st.markdown("""
     padding-top: 45px;
     font-size: 13px;
     letter-spacing: 1px;
+}
+
+/* ---------------------------------------------------------
+   MOBILE RESPONSIVENESS
+--------------------------------------------------------- */
+
+@media (max-width: 768px) {
+
+    .block-container {
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-top: 18px;
+    }
+
+    .hero {
+        padding: 24px 20px;
+        border-radius: 22px;
+        margin-bottom: 18px;
+    }
+
+    .logo {
+        font-size: 34px;
+        letter-spacing: -1.5px;
+    }
+
+    .tagline {
+        font-size: 15px;
+    }
+
+    .hero p {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    /* Keep the four progress metrics in one horizontal row */
+    div[data-testid="stHorizontalBlock"] {
+        gap: 6px;
+    }
+
+    div[data-testid="stHorizontalBlock"] > div {
+        min-width: 0 !important;
+    }
+
+    div[data-testid="stMetric"] {
+        padding: 4px 2px;
+    }
+
+    div[data-testid="stMetricLabel"] {
+        font-size: 9px !important;
+        white-space: nowrap;
+    }
+
+    div[data-testid="stMetricValue"] {
+        font-size: 18px !important;
+    }
+
+    .card {
+        padding: 20px;
+        min-height: 160px;
+    }
+
+    .card h2 {
+        font-size: 20px;
+    }
+
+    .card p {
+        font-size: 14px;
+    }
+
+    .info-box {
+        padding: 18px;
+        font-size: 14px;
+    }
+
+    .info-box h3 {
+        font-size: 17px;
+    }
+
+    .sign-card {
+        padding: 22px;
+    }
+
+    .target {
+        padding: 25px 15px;
+    }
+
+    .target-sign {
+        font-size: 65px;
+    }
+
+    .result {
+        padding: 25px 15px;
+    }
+
+    .result-sign {
+        font-size: 42px;
+    }
+
 }
 
 </style>
@@ -566,6 +668,10 @@ st.write("")
 
 if st.session_state.page == "HOME":
 
+    # =====================================================
+    # WELCOME FIRST
+    # =====================================================
+
     st.header("Welcome to SignBridge 👋")
 
     st.write(
@@ -574,6 +680,73 @@ if st.session_state.page == "HOME":
     )
 
     st.write("")
+
+    # =====================================================
+    # SIGNBRIDGE INTRO
+    # =====================================================
+
+    st.markdown("""
+    <div class="hero">
+
+    <div class="small-label">
+    AI • COMPUTER VISION • SIGN LANGUAGE
+    </div>
+
+    <h2>
+    🖐️ SIGNBRIDGE
+    </h2>
+
+    <div class="tagline">
+    Turning gestures into understanding.
+    </div>
+
+    <p>
+    Learn signs, practise with AI and build your confidence
+    through interactive challenges.
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.write("")
+
+    # =====================================================
+    # HOME PROGRESS STATS
+    # =====================================================
+
+    st.header("🏆 Your Progress")
+
+    p1, p2, p3, p4 = st.columns(4)
+
+    with p1:
+        st.metric(
+            "⭐ XP",
+            st.session_state.score
+        )
+
+    with p2:
+        st.metric(
+            "🎯 TARGET",
+            st.session_state.attempts
+        )
+
+    with p3:
+        st.metric(
+            "📊 ACCURACY",
+            f"{accuracy:.0f}%"
+        )
+
+    with p4:
+        st.metric(
+            "🔥 BEST STREAK",
+            st.session_state.best_streak
+        )
+
+    st.write("")
+
+    # =====================================================
+    # THREE MAIN CARDS
+    # =====================================================
 
     col1, col2, col3 = st.columns(3)
 
@@ -639,6 +812,10 @@ if st.session_state.page == "HOME":
 
     st.write("")
 
+    # =====================================================
+    # HOW SIGNBRIDGE WORKS
+    # =====================================================
+
     st.header("🧠 How SignBridge Works")
 
     a, b, c = st.columns(3)
@@ -646,31 +823,64 @@ if st.session_state.page == "HOME":
     with a:
         st.markdown("""
         <div class="info-box">
-        <h3>📷 01 — Capture</h3>
-        Your camera captures the hand gesture.
+
+        <div class="small-label">
+        STEP 01
+        </div>
+
+        <h3>📷 CAPTURE</h3>
+
+        <p>
+        Your camera captures the hand gesture clearly
+        so SignBridge can begin analysing it.
+        </p>
+
         </div>
         """, unsafe_allow_html=True)
 
     with b:
         st.markdown("""
         <div class="info-box">
-        <h3>🔬 02 — Track</h3>
-        MediaPipe identifies 21 hand landmarks.
+
+        <div class="small-label">
+        STEP 02
+        </div>
+
+        <h3>🔬 TRACK</h3>
+
+        <p>
+        MediaPipe tracks 21 hand landmarks and
+        maps the position of each point.
+        </p>
+
         </div>
         """, unsafe_allow_html=True)
 
     with c:
         st.markdown("""
         <div class="info-box">
-        <h3>🤖 03 — Recognise</h3>
-        Landmark positions are analysed
-        using classification rules.
+
+        <div class="small-label">
+        STEP 03
+        </div>
+
+        <h3>🤖 RECOGNISE</h3>
+
+        <p>
+        Landmark positions are analysed using
+        classification rules to identify the gesture.
+        </p>
+
         </div>
         """, unsafe_allow_html=True)
 
     st.write("")
 
-    st.header("🏆 Your Progress")
+    # =====================================================
+    # PROGRESS
+    # =====================================================
+
+    st.header("📈 Progress Level")
 
     st.progress(
         min(st.session_state.score / 100, 1.0)
@@ -697,6 +907,10 @@ if st.session_state.page == "HOME":
         )
 
     st.write("")
+
+    # =====================================================
+    # FEATURED SIGN
+    # =====================================================
 
     st.markdown("""
     <div class="hero">
@@ -1159,3 +1373,4 @@ Turning gestures into understanding 🖐️
 
 </div>
 """, unsafe_allow_html=True)
+```
