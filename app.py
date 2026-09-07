@@ -86,16 +86,16 @@ st.markdown("""
 
 .block-container {
     max-width: 1250px;
-    padding-top: 28px;
-    padding-bottom: 50px;
+    padding-top: 25px;
+    padding-bottom: 60px;
 }
 
-/* ---------------------------------------------------------
-   HERO / BANNER
---------------------------------------------------------- */
+/* =====================================================
+   HERO BANNER
+   ===================================================== */
 
 .hero {
-    padding: 32px;
+    padding: 30px 35px;
     border-radius: 28px;
     background: linear-gradient(
         135deg,
@@ -103,11 +103,11 @@ st.markdown("""
         rgba(6,182,212,0.07)
     );
     border: 1px solid rgba(255,255,255,0.12);
-    margin-bottom: 24px;
+    margin-bottom: 25px;
 }
 
 .logo {
-    font-size: 46px;
+    font-size: 45px;
     font-weight: 900;
     letter-spacing: -2px;
 }
@@ -134,7 +134,7 @@ st.markdown("""
 }
 
 .card {
-    padding: 25px;
+    padding: 28px;
     border-radius: 24px;
     min-height: 190px;
 }
@@ -204,88 +204,57 @@ st.markdown("""
     letter-spacing: 1px;
 }
 
-/* ---------------------------------------------------------
-   MOBILE RESPONSIVENESS
---------------------------------------------------------- */
+/* =====================================================
+   KEEP STATS AND NAVIGATION HORIZONTAL
+   ===================================================== */
+
+[data-testid="stHorizontalBlock"] {
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    gap: 12px;
+}
+
+[data-testid="column"] {
+    min-width: 0 !important;
+}
+
+/* =====================================================
+   MOBILE SIZE ADJUSTMENTS
+   ===================================================== */
 
 @media (max-width: 768px) {
 
     .block-container {
-        padding-left: 12px;
-        padding-right: 12px;
+        padding-left: 18px;
+        padding-right: 18px;
         padding-top: 18px;
     }
 
     .hero {
-        padding: 24px 20px;
-        border-radius: 22px;
-        margin-bottom: 18px;
+        padding: 25px 22px;
+        border-radius: 24px;
     }
 
     .logo {
-        font-size: 34px;
+        font-size: 36px;
         letter-spacing: -1.5px;
     }
 
     .tagline {
-        font-size: 15px;
-    }
-
-    .hero p {
-        font-size: 14px;
-        line-height: 1.55;
-    }
-
-    /* Keep the four progress metrics in one horizontal row */
-    div[data-testid="stHorizontalBlock"] {
-        gap: 6px;
-    }
-
-    div[data-testid="stHorizontalBlock"] > div {
-        min-width: 0 !important;
-    }
-
-    div[data-testid="stMetric"] {
-        padding: 4px 2px;
-    }
-
-    div[data-testid="stMetricLabel"] {
-        font-size: 9px !important;
-        white-space: nowrap;
-    }
-
-    div[data-testid="stMetricValue"] {
-        font-size: 18px !important;
+        font-size: 16px;
     }
 
     .card {
-        padding: 20px;
-        min-height: 160px;
-    }
-
-    .card h2 {
-        font-size: 20px;
-    }
-
-    .card p {
-        font-size: 14px;
+        padding: 22px;
+        min-height: 175px;
     }
 
     .info-box {
-        padding: 18px;
-        font-size: 14px;
-    }
-
-    .info-box h3 {
-        font-size: 17px;
-    }
-
-    .sign-card {
-        padding: 22px;
+        padding: 20px;
     }
 
     .target {
-        padding: 25px 15px;
+        padding: 25px;
     }
 
     .target-sign {
@@ -293,11 +262,31 @@ st.markdown("""
     }
 
     .result {
-        padding: 25px 15px;
+        padding: 25px;
     }
 
     .result-sign {
         font-size: 42px;
+    }
+
+    .sign-emoji {
+        font-size: 55px;
+    }
+
+    .sign-name {
+        font-size: 20px;
+    }
+
+    h1 {
+        font-size: 28px !important;
+    }
+
+    h2 {
+        font-size: 22px !important;
+    }
+
+    h3 {
+        font-size: 18px !important;
     }
 
 }
@@ -421,7 +410,6 @@ def classify_gesture(landmarks):
 
     # =====================================================
     # LOVE
-    # INDEX + PINKY + THUMB
     # =====================================================
 
     if (
@@ -435,8 +423,6 @@ def classify_gesture(landmarks):
 
     # =====================================================
     # ROCK
-    # INDEX + PINKY
-    # THUMB MUST BE CLOSED
     # =====================================================
 
     if (
@@ -450,7 +436,6 @@ def classify_gesture(landmarks):
 
     # =====================================================
     # CALL
-    # THUMB + PINKY
     # =====================================================
 
     if (
@@ -552,123 +537,13 @@ def detect_hand(image):
 
 
 # =========================================================
-# HEADER
-# =========================================================
-
-st.markdown("""
-<div class="hero">
-
-<div class="small-label">
-AI • COMPUTER VISION • SIGN LANGUAGE
-</div>
-
-<div class="logo">
-🖐️ SIGNBRIDGE
-</div>
-
-<div class="tagline">
-Turning gestures into understanding.
-</div>
-
-<p>
-Learn signs, practise with AI and build your confidence
-through interactive challenges.
-</p>
-
-</div>
-""", unsafe_allow_html=True)
-
-# =========================================================
-# STATS
-# =========================================================
-
-accuracy = (
-    st.session_state.correct /
-    st.session_state.attempts *
-    100
-    if st.session_state.attempts > 0
-    else 0
-)
-
-c1, c2, c3, c4 = st.columns(4)
-
-with c1:
-    st.metric(
-        "⭐ XP",
-        st.session_state.score
-    )
-
-with c2:
-    st.metric(
-        "🎯 ATTEMPTS",
-        st.session_state.attempts
-    )
-
-with c3:
-    st.metric(
-        "📊 ACCURACY",
-        f"{accuracy:.0f}%"
-    )
-
-with c4:
-    st.metric(
-        "🔥 BEST STREAK",
-        st.session_state.best_streak
-    )
-
-st.write("")
-
-# =========================================================
-# NAVIGATION
-# =========================================================
-
-st.markdown(
-    """
-    <div class="small-label" style="text-align:center;">
-    EXPLORE SIGNBRIDGE
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-st.write("")
-
-nav1, nav2, nav3 = st.columns(3)
-
-with nav1:
-    if st.button(
-        "🏠 HOME",
-        use_container_width=True
-    ):
-        st.session_state.page = "HOME"
-        st.rerun()
-
-with nav2:
-    if st.button(
-        "📚 LEARN",
-        use_container_width=True
-    ):
-        st.session_state.page = "LEARN"
-        st.rerun()
-
-with nav3:
-    if st.button(
-        "🎯 PRACTICE",
-        use_container_width=True
-    ):
-        st.session_state.page = "PRACTICE"
-        st.rerun()
-
-st.write("")
-
-# =========================================================
 # HOME
 # =========================================================
 
 if st.session_state.page == "HOME":
 
     # =====================================================
-    # WELCOME FIRST
+    # 1. WELCOME — FIRST
     # =====================================================
 
     st.header("Welcome to SignBridge 👋")
@@ -681,7 +556,7 @@ if st.session_state.page == "HOME":
     st.write("")
 
     # =====================================================
-    # SIGNBRIDGE INTRO
+    # 2. SIGNBRIDGE BANNER
     # =====================================================
 
     st.markdown("""
@@ -691,9 +566,9 @@ if st.session_state.page == "HOME":
     AI • COMPUTER VISION • SIGN LANGUAGE
     </div>
 
-    <h2>
+    <div class="logo">
     🖐️ SIGNBRIDGE
-    </h2>
+    </div>
 
     <div class="tagline">
     Turning gestures into understanding.
@@ -707,35 +582,85 @@ if st.session_state.page == "HOME":
     </div>
     """, unsafe_allow_html=True)
 
+    # =====================================================
+    # 3. HOW SIGNBRIDGE WORKS
+    # =====================================================
+
+    st.header("🧠 How SignBridge Works")
+
+    a, b, c = st.columns(3)
+
+    with a:
+        st.markdown("""
+        <div class="info-box">
+
+        <h3>📷 01 — Capture</h3>
+
+        Your camera captures the hand gesture
+        clearly for analysis.
+
+        </div>
+        """, unsafe_allow_html=True)
+
+    with b:
+        st.markdown("""
+        <div class="info-box">
+
+        <h3>🔬 02 — Track</h3>
+
+        MediaPipe identifies 21 hand landmarks
+        to track the hand's position.
+
+        </div>
+        """, unsafe_allow_html=True)
+
+    with c:
+        st.markdown("""
+        <div class="info-box">
+
+        <h3>🤖 03 — Recognise</h3>
+
+        Landmark positions are analysed
+        using classification rules.
+
+        </div>
+        """, unsafe_allow_html=True)
+
     st.write("")
 
     # =====================================================
-    # HOME PROGRESS STATS
+    # 4. XP / ATTEMPTS / ACCURACY / BEST STREAK
     # =====================================================
 
-    st.header("🏆 Your Progress")
+    accuracy = (
+        st.session_state.correct /
+        st.session_state.attempts *
+        100
+        if st.session_state.attempts > 0
+        else 0
+    )
 
-    p1, p2, p3, p4 = st.columns(4)
+    c1, c2, c3, c4 = st.columns(4)
 
-    with p1:
+    with c1:
         st.metric(
             "⭐ XP",
             st.session_state.score
         )
 
-    with p2:
+    with c2:
         st.metric(
-            "🎯 TARGET",
+            "🎯 ATTEMPTS",
             st.session_state.attempts
         )
 
-    with p3:
+    with c3:
         st.metric(
             "📊 ACCURACY",
             f"{accuracy:.0f}%"
         )
 
-    with p4:
+    with c4:
         st.metric(
             "🔥 BEST STREAK",
             st.session_state.best_streak
@@ -744,7 +669,50 @@ if st.session_state.page == "HOME":
     st.write("")
 
     # =====================================================
-    # THREE MAIN CARDS
+    # 5. HOME / LEARN / PRACTICE
+    # =====================================================
+
+    st.markdown(
+        """
+        <div class="small-label" style="text-align:center;">
+        EXPLORE SIGNBRIDGE
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.write("")
+
+    nav1, nav2, nav3 = st.columns(3)
+
+    with nav1:
+        if st.button(
+            "🏠 HOME",
+            use_container_width=True
+        ):
+            st.session_state.page = "HOME"
+            st.rerun()
+
+    with nav2:
+        if st.button(
+            "📚 LEARN",
+            use_container_width=True
+        ):
+            st.session_state.page = "LEARN"
+            st.rerun()
+
+    with nav3:
+        if st.button(
+            "🎯 PRACTICE",
+            use_container_width=True
+        ):
+            st.session_state.page = "PRACTICE"
+            st.rerun()
+
+    st.write("")
+
+    # =====================================================
+    # 6. SIGNBRIDGE FEATURES
     # =====================================================
 
     col1, col2, col3 = st.columns(3)
@@ -812,74 +780,10 @@ if st.session_state.page == "HOME":
     st.write("")
 
     # =====================================================
-    # HOW SIGNBRIDGE WORKS
+    # 7. YOUR PROGRESS
     # =====================================================
 
-    st.header("🧠 How SignBridge Works")
-
-    a, b, c = st.columns(3)
-
-    with a:
-        st.markdown("""
-        <div class="info-box">
-
-        <div class="small-label">
-        STEP 01
-        </div>
-
-        <h3>📷 CAPTURE</h3>
-
-        <p>
-        Your camera captures the hand gesture clearly
-        so SignBridge can begin analysing it.
-        </p>
-
-        </div>
-        """, unsafe_allow_html=True)
-
-    with b:
-        st.markdown("""
-        <div class="info-box">
-
-        <div class="small-label">
-        STEP 02
-        </div>
-
-        <h3>🔬 TRACK</h3>
-
-        <p>
-        MediaPipe tracks 21 hand landmarks and
-        maps the position of each point.
-        </p>
-
-        </div>
-        """, unsafe_allow_html=True)
-
-    with c:
-        st.markdown("""
-        <div class="info-box">
-
-        <div class="small-label">
-        STEP 03
-        </div>
-
-        <h3>🤖 RECOGNISE</h3>
-
-        <p>
-        Landmark positions are analysed using
-        classification rules to identify the gesture.
-        </p>
-
-        </div>
-        """, unsafe_allow_html=True)
-
-    st.write("")
-
-    # =====================================================
-    # PROGRESS
-    # =====================================================
-
-    st.header("📈 Progress Level")
+    st.header("🏆 Your Progress")
 
     st.progress(
         min(st.session_state.score / 100, 1.0)
@@ -908,7 +812,7 @@ if st.session_state.page == "HOME":
     st.write("")
 
     # =====================================================
-    # FEATURED SIGN
+    # 8. FEATURED SIGN
     # =====================================================
 
     st.markdown("""
@@ -928,6 +832,7 @@ if st.session_state.page == "HOME":
 
     </div>
     """, unsafe_allow_html=True)
+
 
 # =========================================================
 # LEARN
@@ -1051,6 +956,7 @@ elif st.session_state.page == "LEARN":
 
     </div>
     """, unsafe_allow_html=True)
+
 
 # =========================================================
 # PRACTICE
@@ -1341,6 +1247,7 @@ elif st.session_state.page == "PRACTICE":
         </div>
         """, unsafe_allow_html=True)
 
+
 # =========================================================
 # RESET
 # =========================================================
@@ -1356,6 +1263,7 @@ if st.button(
         st.session_state[key] = value
 
     st.rerun()
+
 
 # =========================================================
 # FOOTER
